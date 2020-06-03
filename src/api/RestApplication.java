@@ -15,5 +15,5 @@ public class RestApplication extends Application {
 	@GET  
     public Response sayHello() {     
         return Response.ok("Hello World desde el API REST",MediaType.APPLICATION_JSON).build();   
-    } 
+    }
 }

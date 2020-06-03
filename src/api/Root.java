@@ -6,18 +6,27 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response; 
 
 /**
  * Servlet implementation class helloworld
  */
-@WebServlet("/helloworld")
-public class helloworld extends HttpServlet {
+@WebServlet("/")
+@Produces(MediaType.APPLICATION_JSON) 
+@Consumes(MediaType.APPLICATION_JSON)
+public class Root extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public helloworld() {
+    public Root() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,9 +35,7 @@ public class helloworld extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		response.getWriter().append("Hola Mundo!!!");
+		response.getWriter().append("Usted se ha conectado correctamente con la API REST del Colegio de Médicos de San Juan, para mayor información sobre los endpoints disponibles y demás documentación, por favor contactarnos al correo ti.colegiomedico@gmail.com");
 	}
 
 	/**
