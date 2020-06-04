@@ -8,17 +8,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 
 import api.MysqlQuery;
+import modelos.Afiliado;
 
-
-@Path("/paises/{id}")
-@Produces(MediaType.APPLICATION_JSON)
-
-public GetByDocument findCuntryList(@PathParam("id")int id){
-
+/**
+ * Servlet implementation class test2
+ */
+@WebServlet("/getAllTests")
+public class GetByDocument extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -34,9 +33,10 @@ public GetByDocument findCuntryList(@PathParam("id")int id){
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try { 
-			MysqlQuery query = new MysqlQuery();
-			
-			
+
+			String documento = request.getParameter("documento");
+	        Afiliado afi = new Afiliado();
+	        afi.setNumDocumento(Integer.parseInt(documento));
 	        
         }		
         catch (Exception e) { 

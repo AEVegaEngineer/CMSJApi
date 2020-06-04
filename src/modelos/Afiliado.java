@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import api.MysqlConnection;
 
-public class Metodos {
+public class Afiliado {
 private static int numAfiliado;
 private static int numDocumento;
 
@@ -17,13 +17,13 @@ public static int getNumAfiliado() {
 	return numAfiliado;
 }
 public static void setNumAfiliado(int numAfiliado) {
-	Metodos.numAfiliado = numAfiliado;
+	Afiliado.numAfiliado = numAfiliado;
 }
 public static int getNumDocumento() {
 	return numDocumento;
 }
 public static void setNumDocumento(int numDocumento) {
-	Metodos.numDocumento = numDocumento;
+	Afiliado.numDocumento = numDocumento;
 }
 	
 	ArrayList<String> GetAfiliadoByDocumento() throws ClassNotFoundException {
