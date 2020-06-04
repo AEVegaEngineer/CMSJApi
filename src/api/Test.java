@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import api.MysqlConnection;
+import api.MysqlQuery;
 
 /**
  * Servlet implementation class test2
@@ -24,20 +24,7 @@ import api.MysqlConnection;
 @WebServlet("/getAllTests")
 public class Test extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static String testById = "Select * from tablatest where testId = ";
-	private static String params;
 	
-	public void setTestById(String testById) {
-		this.testById = testById;
-	}
-
-	public String getParams() {
-		return params;
-	}
-
-	public void setParams(String params) {
-		this.params = params;
-	}	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -52,9 +39,11 @@ public class Test extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		ResultSet rs = null;
-		try { 			
-			setParams("1");
-			getTestById();		
+		try { 
+			MysqlQuery query = new MysqlQuery();
+			query.setParams("1");
+			query.getTestById();
+			
 	        
         }		
         catch (Exception e) { 
@@ -71,31 +60,6 @@ public class Test extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	ResultSet getTestById() throws ClassNotFoundException 
-	{
-		
-		try (Connection con = getConnection())
-	    {
-			Statement st = con.createStatement();
-			String sql = (testById + params);
-			ResultSet rs = st.executeQuery(sql);
-			if(rs.next()) { 
-				int id = rs.getInt("testDato1"); 
-				int dato1 = rs.getInt("testDato2");
-				System.out.println("id: "+id+" - dato1:"+dato1);
-			}
-			con.close();
-	    } catch (SQLException e1) {
-	    	System.out.println("cosa2");
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		return null;
-	  
-	}
-
-	private static Connection getConnection() throws ClassNotFoundException, SQLException {
-		return MysqlConnection.initializeDatabase();
-	}
+	
 
 }

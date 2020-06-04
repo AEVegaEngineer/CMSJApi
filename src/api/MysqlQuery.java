@@ -31,35 +31,24 @@ public class MysqlQuery {
 	ResultSet getTestById() throws ClassNotFoundException 
 	{
 		
-		//ResultSet rs = null;
-	   // ArrayList result = new ArrayList();
-	    try (Connection con = getConnection())
+		try (Connection con = getConnection())
 	    {
-	    	String query = testById + params;
-	    	
-	        Statement stmt = con.createStatement();
-	        PreparedStatement ps = con.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();  
-            if(rs.getFetchSize() != 0)
-            {
-            	while (rs.next()) {
-    				System.out.println("entro en el while");
-    				//rs.getString("testDato1")
-    	        }
-            }
-            else
-            {
-            	System.out.println("error en query");
-            }
-            
-        	return null;
-        	
+			ArrayList arr = new ArrayList();
+			Statement st = con.createStatement();
+			String sql = (testById + params);
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				int id = rs.getInt("testDato1");
+				int dato1 = rs.getInt("testDato2");
+				arr.add(id);
+				arr.add(dato1);
+			}
+			con.close();
 	    } catch (SQLException e1) {
-	    	System.out.println("cosa2");
+	    	System.out.println("cosa2"); 
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-	    System.out.println("nada");
 		return null;
 	  
 	}
