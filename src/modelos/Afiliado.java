@@ -22,24 +22,28 @@ public static void setNumAfiliado(int numAfiliado) {
 public static int getNumDocumento() {
 	return numDocumento;
 }
-public static void setNumDocumento(int numDocumento) {
+public void setNumDocumento(int numDocumento) {
 	Afiliado.numDocumento = numDocumento;
 }
 	
-	ArrayList<String> GetAfiliadoByDocumento() throws ClassNotFoundException {
+	public	ArrayList<String> GetAfiliadoByDocumento() throws ClassNotFoundException {
 
 		ArrayList<String> resultado = new ArrayList<String>();
 		
 		try (Connection con = getConnection())
 	    {
-			String sql = "Select * from tablatest where NROAFI = "+numDocumento;
+			String sql = "Select * from afiliado where nrodoc = "+numDocumento;
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
-				int id = rs.getInt("testDato1");
-				int dato1 = rs.getInt("testDato2");
-				resultado.add(String.valueOf(id));
-				resultado.add(String.valueOf(dato1));
+				int doc = rs.getInt("nrodoc");
+				int afi = rs.getInt("nroafi");
+				String nombre = rs.getString("nombre");
+				String apellido = rs.getString("apellido");
+				resultado.add(String.valueOf(doc));
+				resultado.add(String.valueOf(afi));
+				resultado.add(nombre);
+				resultado.add(apellido);
 			}
 			con.close();
 			return resultado;

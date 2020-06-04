@@ -8,14 +8,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import java.util.ArrayList;
 import api.MysqlQuery;
 import modelos.Afiliado;
 
 /**
  * Servlet implementation class test2
  */
-@WebServlet("/getAllTests")
+@WebServlet("/endpoints/GetByDocument")
 public class GetByDocument extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -33,11 +33,15 @@ public class GetByDocument extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try { 
-
+			ArrayList<String> datos = new ArrayList<String>();
 			String documento = request.getParameter("documento");
 	        Afiliado afi = new Afiliado();
 	        afi.setNumDocumento(Integer.parseInt(documento));
-	        
+	        datos = afi.GetAfiliadoByDocumento();
+	        for (int i = 0; i < datos.size(); i++) {
+				System.out.println(datos.get(i));
+			}
+	       
         }		
         catch (Exception e) { 
         	System.out.println("Retorna el catch");
