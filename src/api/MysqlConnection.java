@@ -19,6 +19,7 @@ public class MysqlConnection {
 		String dbPassword = "123"; 
 		String cosaHorrorosa = "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 //esta es una omdificacionaoinfoidanoidsnfio
+		//nueva modificaciones
 		Class.forName(dbDriver); 
 		Connection con = DriverManager.getConnection(dbURL + dbName + cosaHorrorosa, 
 													dbUsername, 
