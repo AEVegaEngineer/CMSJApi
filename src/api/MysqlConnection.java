@@ -12,13 +12,13 @@ public class MysqlConnection {
 		// Initialize all the information regarding 
 		// Database Connection 
 		String dbDriver = "com.mysql.cj.jdbc.Driver"; 
-		String dbURL = "jdbc:mysql://localhost:3306/"; 
+		String dbURL = "jdbc:mysql://192.168.0.100:3306/"; 
 		// Database name to access 
 		String dbName = "datostest"; 
 		String dbUsername = "root"; 
-		String dbPassword = ""; 
+		String dbPassword = "123"; 
 		String cosaHorrorosa = "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-
+//esta es una omdificacionaoinfoidanoidsnfio
 		Class.forName(dbDriver); 
 		Connection con = DriverManager.getConnection(dbURL + dbName + cosaHorrorosa, 
 													dbUsername, 
