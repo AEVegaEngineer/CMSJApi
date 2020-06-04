@@ -6,7 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.Map;
 import java.sql.Statement;
 
 import api.MysqlConnection;
@@ -28,7 +29,7 @@ public class MysqlQuery {
 		this.params = params;
 	}	
 	
-	ResultSet getTestById() throws ClassNotFoundException 
+	public ResultSet getTestById() throws ClassNotFoundException 
 	{
 		
 		try (Connection con = getConnection())
@@ -37,16 +38,10 @@ public class MysqlQuery {
 			Statement st = con.createStatement();
 			String sql = (testById + params);
 			ResultSet rs = st.executeQuery(sql);
-			while (rs.next()) {
-				int id = rs.getInt("testDato1");
-				int dato1 = rs.getInt("testDato2");
-				arr.add(id);
-				arr.add(dato1);
-			}
 			con.close();
+			return rs;
 	    } catch (SQLException e1) {
-	    	System.out.println("cosa2"); 
-			// TODO Auto-generated catch block
+	    	System.out.println("Excepción en la conexión!");
 			e1.printStackTrace();
 		}
 		return null;

@@ -15,14 +15,14 @@ import modelos.Afiliado;
 /**
  * Servlet implementation class test2
  */
-@WebServlet("/endpoints/GetByDocument")
-public class GetByDocument extends HttpServlet {
+@WebServlet("/GetAfiliadoByDocument")
+public class GetAfiliadoByDocument extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetByDocument() {
+    public GetAfiliadoByDocument() {
         super();
         // TODO Auto-generated constructor stub
     }

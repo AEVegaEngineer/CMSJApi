@@ -1,4 +1,4 @@
-package api;
+package endpoints;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -15,11 +15,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response; 
 
 /**
- * Servlet implementation class helloworld
+ * Implementación Servlet clase helloworld
  */
 @WebServlet("/")
+/*
 @Produces(MediaType.APPLICATION_JSON) 
 @Consumes(MediaType.APPLICATION_JSON)
+*/
 public class Root extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
