@@ -1,6 +1,7 @@
 package modelos;
 
 
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -81,7 +82,8 @@ public void setNumDocumento(int numDocumento) {
 			}
 		}
 		else {
-			System.out.println("Falta el parámetro de entrada.");
+			System.out.println("ERROR , SIN PARAMETROS");
+			
 			return null;
 			
 		}

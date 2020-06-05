@@ -1,13 +1,19 @@
 package endpoints;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.ResultSet;
 
+import javax.json.JsonObject;
+import javax.json.JsonValue;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import api.MysqlQuery;
 import modelos.Afiliado;
@@ -33,14 +39,30 @@ public class GetAfiliadoByDocument extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try { 
-			ArrayList<String> datos = new ArrayList<String>();
 			String documento = request.getParameter("documento");
-	        Afiliado afi = new Afiliado();
-	        afi.setNumDocumento(Integer.parseInt(documento));
-	        datos = afi.GetAfiliadoByDocumento();
-	        for (int i = 0; i < datos.size(); i++) {
-				System.out.println(datos.get(i));
+			JsonObject AfiliadoByDocument = null;
+			//ArrayList<String> array = new ArrayList<String>();
+			
+			
+			
+			if (documento == null || documento == "") {
+				
+				String error = " {\"results\": \" No se recibio un parámetro de entrada.\"}";
+				 PrintWriter out = response.getWriter();
+				// String json = new Gson().toJson(error);
+
+			        out.print(error);
+
 			}
+			else {
+				
+				Afiliado a = new Afiliado();
+		        a.setParams(documento);
+		        AfiliadoByDocument = a.getAfiliadoByDocumento();
+		        PrintWriter out = response.getWriter();
+		        out.print(AfiliadoByDocument);
+			}
+			
 	       
         }		
         catch (Exception e) { 
