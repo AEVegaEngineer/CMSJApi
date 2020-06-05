@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import modelos.Afiliado;
 import modelos.Test;
 
 /**
@@ -26,13 +27,13 @@ public class GetTestAll extends HttpServlet {
 	@Override
     protected void doGet(
       HttpServletRequest request, 
-      HttpServletResponse response) throws IOException {    	
-        Test test = new Test();
-        JsonObject testById = null;
-        test.setParams("1");
-        testById = test.getTestByTestDato1();
+      HttpServletResponse response) throws IOException {    
+		JsonObject AfiliadoByDocument = null;
+		Afiliado a = new Afiliado();
+        a.setParams("41253066");
+        AfiliadoByDocument = a.getAfiliadoByDocumento();
         PrintWriter out = response.getWriter();
-        out.print(testById);
+        out.print(AfiliadoByDocument);
     } 
 
 	/**

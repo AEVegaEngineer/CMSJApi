@@ -6,13 +6,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import javax.json.JsonObject;
+
 import api.MysqlConnection;
+import util.Consultas;
 
 public class Afiliado {
 private static int numAfiliado;
 private static int numDocumento;
+private String getAfiliadoByDocumento = "SELECT * FROM afiliado where NRODOC =  ";
+private String params = "";
 
-
+public String getParams() {
+	return params;
+}
+public void setParams(String params) {
+	this.params = params;
+}
 public static int getNumAfiliado() {
 	return numAfiliado;
 }
@@ -58,6 +69,25 @@ public void setNumDocumento(int numDocumento) {
 		
 	return resultado;
 }
+	public JsonObject getAfiliadoByDocumento() {
+		if(params != "") {
+			Consultas a = new Consultas();
+			try {
+				return a.consultar(getAfiliadoByDocumento+params);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Error consultando getAfiliadoByDocument");
+				e.printStackTrace();
+			}
+		}
+		else {
+			System.out.println("Falta el parámetro de entrada.");
+			return null;
+			
+		}
+		return null;
+	}
+	
 	private static Connection getConnection() throws ClassNotFoundException, SQLException {
 		return MysqlConnection.initializeDatabase();
 	}
