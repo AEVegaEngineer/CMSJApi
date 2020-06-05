@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-import com.google.gson.Gson;
+import javax.json.JsonObject;
 
 import api.MysqlConnection;
+import io.github.mattvass.resultsetmapper.JsonResultSet;
 
 public class Test {
 	private int testId;
@@ -41,36 +43,50 @@ public class Test {
 		this.testDato3 = testDato3;
 	}
 	
-	public	ResultSet getTestAll() throws ClassNotFoundException {
-		String testJsonString = "";
+	public	JsonObject getTestAll() throws ClassNotFoundException {
 		try (Connection con = getConnection())
 	    {
 			String sql = "Select * from tablatest";
 			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(sql);	
-			String resultado = "";
-			int contador = 0, iterador = 0;
-			while (rs.next()) {
-				contador++;				
-			}
-			rs.beforeFirst();
-			con.close();
-			return rs;
-			//System.out.println(resultado);
-			//{"testId":2,"testDato1":1,"testDato2":5,"testDato3":6}
+			ResultSet rs = st.executeQuery(sql);
+			JsonObject a = new JsonResultSet().toJson(rs);				
+			con.close();					
+			return a;			
 			
-			//return testJsonString;
 	    } catch (SQLException e1) {
 	    	System.out.println("Salio por el catch"); 
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		return null;
-		//return "Error. La consulta está mal formada.";
 	}
 	
 	private static Connection getConnection() throws ClassNotFoundException, SQLException {
 		return MysqlConnection.initializeDatabase();
+	}
+	
+	public ArrayList resultSetToArrayList(ResultSet rs){
+		java.sql.ResultSetMetaData md;
+		try {
+			md = rs.getMetaData();
+		
+			int columns = md.getColumnCount();
+			ArrayList results = new ArrayList();
+		  
+			while (rs.next()){
+				HashMap row = new HashMap();
+				results.add(row);
+				for(int i=1; i<=columns; i++){
+					row.put(md.getColumnName(i),rs.getObject(i));
+				}
+			}
+			return results;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error parseando ResultSet a ArrayList");			
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 }
