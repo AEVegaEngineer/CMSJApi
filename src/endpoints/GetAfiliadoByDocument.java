@@ -49,7 +49,7 @@ public class GetAfiliadoByDocument extends HttpServlet {
 				
 				String error = " {\"results\": \" No se recibio un parámetro de entrada.\"}";
 				 PrintWriter out = response.getWriter();
-				// String json = new Gson().toJson(error);
+				
 
 			        out.print(error);
 
