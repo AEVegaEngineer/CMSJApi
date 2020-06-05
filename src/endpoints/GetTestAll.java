@@ -2,6 +2,8 @@ package endpoints;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import javax.json.JsonObject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,17 +28,11 @@ public class GetTestAll extends HttpServlet {
       HttpServletRequest request, 
       HttpServletResponse response) throws IOException {    	
         Test test = new Test();
-        javax.json.JsonObject TestAll = null; 
-        try {
-			TestAll = test.getTestAll();
-			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.out.println("No se encontró la clase Test");
-			e.printStackTrace();
-		}
+        JsonObject testById = null;
+        test.setParams("1");
+        testById = test.getTestByTestDato1();
         PrintWriter out = response.getWriter();
-        out.print(TestAll);
+        out.print(testById);
     } 
 
 	/**

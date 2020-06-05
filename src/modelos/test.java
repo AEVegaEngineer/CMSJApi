@@ -11,82 +11,53 @@ import javax.json.JsonObject;
 
 import api.MysqlConnection;
 import io.github.mattvass.resultsetmapper.JsonResultSet;
+import util.Consultas;
 
 public class Test {
-	private int testId;
-	private int testDato1;
-	private int testDato2;
-	private int testDato3;
-		
-	public int getTestId() {
-		return testId;
-	}
-	public void setTestId(int testId) {
-		this.testId = testId;
-	}
-	public int getTestDato1() {
-		return testDato1;
-	}
-	public void setTestDato1(int testDato1) {
-		this.testDato1 = testDato1;
-	}
-	public int getTestDato2() {
-		return testDato2;
-	}	
-	public void setTestDato2(int testDato2) {
-		this.testDato2 = testDato2;
-	}
-	public int getTestDato3() {
-		return testDato3;
-	}
-	public void setTestDato3(int testDato3) {
-		this.testDato3 = testDato3;
-	}
-	
-	public	JsonObject getTestAll() throws ClassNotFoundException {
-		try (Connection con = getConnection())
-	    {
-			String sql = "Select * from tablatest";
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(sql);
-			JsonObject a = new JsonResultSet().toJson(rs);				
-			con.close();					
-			return a;			
-			
-	    } catch (SQLException e1) {
-	    	System.out.println("Salio por el catch"); 
+	private String TestByTestDato1 = "select * from tablatest where testDato1 = ";
+	private String TestById = "select * from tablatest where testId = ";
+	private String TestAll = "select * from tablatest";
+	private String params = "";
+	public JsonObject getTestById() {
+		Consultas a = new Consultas();
+		try {
+			return a.consultar(TestById+params);
+		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			System.out.println("Error consultando getTestById");
+			e.printStackTrace();
 		}
 		return null;
 	}
-	
-	private static Connection getConnection() throws ClassNotFoundException, SQLException {
-		return MysqlConnection.initializeDatabase();
-	}
-	
-	public ArrayList resultSetToArrayList(ResultSet rs){
-		java.sql.ResultSetMetaData md;
+	public JsonObject getTestAll() {
+		Consultas a = new Consultas();
 		try {
-			md = rs.getMetaData();
-		
-			int columns = md.getColumnCount();
-			ArrayList results = new ArrayList();
-		  
-			while (rs.next()){
-				HashMap row = new HashMap();
-				results.add(row);
-				for(int i=1; i<=columns; i++){
-					row.put(md.getColumnName(i),rs.getObject(i));
-				}
-			}
-			return results;
-		} catch (SQLException e) {
+			return a.consultar(TestAll);
+		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Error parseando ResultSet a ArrayList");			
+			System.out.println("Error consultando getTestAll");
 			e.printStackTrace();
-			return null;
 		}
+		return null;
 	}
+	public JsonObject getTestByTestDato1() {
+		Consultas a = new Consultas();
+		try {
+			return a.consultar(TestByTestDato1+params);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error consultando getTestById");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public String getParams() {
+		return params;
+	}
+	public void setParams(String params) {
+		this.params = params;
+	}
+	
+
 	
 }
