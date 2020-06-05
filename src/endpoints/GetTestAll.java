@@ -28,13 +28,13 @@ public class GetTestAll extends HttpServlet {
     protected void doGet(
       HttpServletRequest request, 
       HttpServletResponse response) throws IOException {    
-		JsonObject AfiliadoByDocument = null;
-		Afiliado a = new Afiliado();
-        a.setParams("41253066");
-        AfiliadoByDocument = a.getAfiliadoByDocumento();
+		JsonObject TestById = null;
+		Test a = new Test();
+        a.setParams("1");
+        TestById = a.getTestById();
         PrintWriter out = response.getWriter();
-        out.print(AfiliadoByDocument);
-    } 
+        out.print(TestById);
+    }
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -44,7 +44,7 @@ public class GetTestAll extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	public Response retornaOK() {     
+	public Response retornaOK() {
         return Response.ok("Se ha retornado el recurso correctamente",MediaType.APPLICATION_JSON).build();
         
     }
