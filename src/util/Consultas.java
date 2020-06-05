@@ -18,9 +18,10 @@ public class Consultas {
 	    {			
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(sql);
-			JsonObject a = new JsonResultSet().toJson(rs);				
+			JsonObject obj = new JsonResultSet().toJson(rs);	
+			System.out.println(obj);			
 			con.close();					
-			return a;			
+			return obj;			
 			
 	    } catch (SQLException e1) {
 	    	System.out.println("Salio por el catch"); 

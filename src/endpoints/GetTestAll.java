@@ -30,8 +30,8 @@ public class GetTestAll extends HttpServlet {
       HttpServletResponse response) throws IOException {    
 		JsonObject TestById = null;
 		Test a = new Test();
-        a.setParams("1");
-        TestById = a.getTestById();
+        //a.setParams("1");
+        TestById = a.getTestAll();
         PrintWriter out = response.getWriter();
         out.print(TestById);
     }

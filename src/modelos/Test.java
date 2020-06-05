@@ -1,16 +1,7 @@
 package modelos;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import javax.json.JsonObject;
 
-import api.MysqlConnection;
-import io.github.mattvass.resultsetmapper.JsonResultSet;
 import util.Consultas;
 
 public class Test {
@@ -46,7 +37,7 @@ public class Test {
 			return a.consultar(TestByTestDato1+params);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Error consultando getTestById");
+			System.out.println("Error consultando getTestByTestDato1");
 			e.printStackTrace();
 		}
 		return null;
