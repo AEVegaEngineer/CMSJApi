@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
+
 import com.google.gson.Gson;
 
 import api.MysqlConnection;
@@ -39,32 +41,36 @@ public class Test {
 		this.testDato3 = testDato3;
 	}
 	
-	public	String getTestAll() throws ClassNotFoundException {
+	public	ResultSet getTestAll() throws ClassNotFoundException {
 		String testJsonString = "";
 		try (Connection con = getConnection())
 	    {
 			String sql = "Select * from tablatest";
 			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(sql);
+			ResultSet rs = st.executeQuery(sql);	
+			String resultado = "";
+			int contador = 0, iterador = 0;
 			while (rs.next()) {
-				this.testId = rs.getInt("testId");
-				this.testDato1 = rs.getInt("testDato1");
-				this.testDato2 = rs.getInt("testDato2");
-				this.testDato3 = rs.getInt("testDato3");
-				final Gson gson = new Gson();
-				testJsonString = gson.toJson(this);
+				contador++;				
 			}
+			rs.beforeFirst();
 			con.close();
-			return testJsonString;
+			return rs;
+			//System.out.println(resultado);
+			//{"testId":2,"testDato1":1,"testDato2":5,"testDato3":6}
+			
+			//return testJsonString;
 	    } catch (SQLException e1) {
 	    	System.out.println("Salio por el catch"); 
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		return "Error. La consulta está mal formada.";
+		return null;
+		//return "Error. La consulta está mal formada.";
 	}
 	
 	private static Connection getConnection() throws ClassNotFoundException, SQLException {
 		return MysqlConnection.initializeDatabase();
 	}
+	
 }
