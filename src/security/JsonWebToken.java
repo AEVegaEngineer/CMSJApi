@@ -43,8 +43,9 @@ public Claims decodificar(String webtoken, String signaturemd5) throws NoSuchAlg
 	String signaturevalidation = codifica.codificarmd5(signaturemd5);
 	  Claims claims = Jwts.parser()
 			  	.setSigningKey(DatatypeConverter.parseString(signaturevalidation))
+			  	//.parsePlaintextJwt(webtoken).getBody();
 	            .parseClaimsJws(webtoken).getBody();
-	  	
+	 
 	    return claims;
 	}
 

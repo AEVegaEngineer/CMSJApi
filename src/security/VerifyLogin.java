@@ -2,9 +2,11 @@ package security;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import api.Mysql_jwt_users;
 import io.jsonwebtoken.Claims;
+import util.TokenClaimsToString;
 
 public class VerifyLogin {
 	public boolean VerificarUsuario(String JsonWebToken) throws NoSuchAlgorithmException, ClassNotFoundException{
@@ -17,13 +19,18 @@ public class VerifyLogin {
 		db.get(2);//PERMISOS AGRUPACION
 		
 		
-		Claims clm = jwt.decodificar(JsonWebToken, "ColegioAPIJWT");
-		//clm.get("name", "String");
+		Claims c = jwt.decodificar(JsonWebToken, "ColegioAPIJWT");
+		//pasar a string el claims
+		TokenClaimsToString conversor = new TokenClaimsToString(); 
+		Map<String, Object> convertido  = conversor.FormatearString(c);
+
+		
+		System.out.println("Contenido del JWT: " +convertido);
 		
 		
 		
 		
-		String codificadoJWT = jwt.codificar(db);
+		//String codificadoJWT = jwt.codificar(db);
 		
 		//System.out.println("Hash de codificacion: "+codificacion);
 
