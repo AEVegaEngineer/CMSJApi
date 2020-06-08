@@ -40,11 +40,11 @@ public class GetFacturacionByAgrupacion extends HttpServlet {
 		}
 		else
 		{			
-			JsonObject facById = null;
+			JsonObject facByAgr = null;
 			Facturacion a = new Facturacion();
-			facById = a.getFacturacionByAgrupacion(agrupacion);
+			facByAgr = a.getFacturacionByAgrupacion(agrupacion);
 	        PrintWriter out = response.getWriter();
-	        out.print(facById);
+	        out.print(facByAgr);
 		}
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
