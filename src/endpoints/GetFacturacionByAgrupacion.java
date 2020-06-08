@@ -13,16 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import modelos.Facturacion;
 
 /**
- * Servlet implementation class GetFacturacionById
+ * Servlet implementation class GetFacturacionByAgrupacion
  */
-@WebServlet("/GetFacturacionById")
-public class GetFacturacionById extends HttpServlet {
+@WebServlet("/GetFacturacionByAgrupacion")
+public class GetFacturacionByAgrupacion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetFacturacionById() {
+    public GetFacturacionByAgrupacion() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,15 +30,10 @@ public class GetFacturacionById extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(
-			HttpServletRequest request,
-			HttpServletResponse response
-			) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		String id = request.getParameter("id");
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String agrupacion = request.getParameter("agrupacion");
 		//ArrayList<String> array = new ArrayList<String>();		
-		if (id == null || id == "") {			
+		if (agrupacion == null || agrupacion == "") {			
 			String error = " {\"results\": \" No se recibio un parámetro de entrada.\"}";
 			PrintWriter out = response.getWriter();
 	        out.print(error);
@@ -47,10 +42,11 @@ public class GetFacturacionById extends HttpServlet {
 		{			
 			JsonObject facById = null;
 			Facturacion a = new Facturacion();
-			facById = a.getFacturacionById(id);
+			facById = a.getFacturacionByAgrupacion(agrupacion);
 	        PrintWriter out = response.getWriter();
 	        out.print(facById);
 		}
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
