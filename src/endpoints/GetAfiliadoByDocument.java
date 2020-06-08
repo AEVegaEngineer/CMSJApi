@@ -2,7 +2,7 @@ package endpoints;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
+import java.security.NoSuchAlgorithmException;
 
 import javax.json.JsonObject;
 import javax.servlet.ServletException;
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import api.Mysql_jwt_users;
 import modelos.Afiliado;
 import security.JsonWebToken;
+import security.VerifyLogin;
 /**
  * Servlet implementation class test2
  */
@@ -35,49 +36,65 @@ public class GetAfiliadoByDocument extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		try { 
-			//TEST GENERANDO TOKEN VALIDADO
-			JsonWebToken jwt = new JsonWebToken();
-			Mysql_jwt_users usuarios = new Mysql_jwt_users();
-			String codificacion = jwt.codificar(usuarios.getTestById());
-			System.out.println("Hash de codificacion: "+codificacion);
-			//DECODIFICAR TOKEN VALIDADO
-			System.out.println("Decodificando...");
-			jwt.decodificar(codificacion, "alñskdansdofnaosndfoi");
-			
-			
-			
-			String documento = request.getParameter("documento");
-			JsonObject AfiliadoByDocument = null;
-			//ArrayList<String> array = new ArrayList<String>();
-			
-			
-			
-			if (documento == null || documento == "") {
-				
-				String error = " {\"results\": \" No se recibio un parámetro de entrada.\"}";
-				 PrintWriter out = response.getWriter();
-				
+		VerifyLogin boolverifica = new VerifyLogin();
+		String JsonWebToken = request.getParameter("token");
+		try {
+			if(boolverifica.VerificarUsuario(JsonWebToken) == true) {
+				try { 
+					//VERIFY VALIDATED 
+					//TEST GENERANDO TOKEN VALIDADO
+					String documento = request.getParameter("documento");
+					JsonObject AfiliadoByDocument = null;
+					//ArrayList<String> array = new ArrayList<String>();
+					
+					
+					
+					if (documento == null || documento == "") {
+						
+						String error = " {\"results\": \" No se recibio un parámetro de entrada.\"}";
+						 PrintWriter out = response.getWriter();
+						
 
-			        out.print(error);
+					        out.print(error);
 
+					}
+					else {
+			
+						
+						Afiliado a = new Afiliado();
+				        a.setParams(documento);
+				        AfiliadoByDocument = a.getAfiliadoByDocumento();
+				        PrintWriter out = response.getWriter();
+				        out.print(AfiliadoByDocument);
+					}
+					
+			       
+			    }		
+			    catch (Exception e) { 
+			    	System.out.println("Retorna el catch");
+			        e.printStackTrace(); 
+			    } 
+				
+				
 			}
 			else {
-	
+				//LOGIN FAILED
+				String error = " {\"results\": \" Error al realizar login.\"}";
+				 PrintWriter out = response.getWriter();
+				    out.print(error);
 				
-				Afiliado a = new Afiliado();
-		        a.setParams(documento);
-		        AfiliadoByDocument = a.getAfiliadoByDocumento();
-		        PrintWriter out = response.getWriter();
-		        out.print(AfiliadoByDocument);
 			}
-			
-	       
-        }		
-        catch (Exception e) { 
-        	System.out.println("Retorna el catch");
-            e.printStackTrace(); 
-        } 
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**

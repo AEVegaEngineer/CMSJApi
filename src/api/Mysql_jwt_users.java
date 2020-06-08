@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Mysql_jwt_users {
-	public ArrayList<String> getTestById() throws ClassNotFoundException 
+	public ArrayList<String> GetUser() throws ClassNotFoundException 
 	{
 		
 		try (Connection con = getConnection())
