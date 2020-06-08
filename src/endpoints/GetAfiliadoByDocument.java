@@ -2,26 +2,23 @@ package endpoints;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
+
 
 import javax.json.JsonObject;
-import javax.json.JsonValue;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import api.MysqlQuery;
+import api.Mysql_jwt_users;
 import modelos.Afiliado;
-
+import security.JsonWebToken;
 /**
  * Servlet implementation class test2
  */
 @WebServlet("/GetAfiliadoByDocument")
+
 public class GetAfiliadoByDocument extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -39,6 +36,17 @@ public class GetAfiliadoByDocument extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try { 
+			//TEST GENERANDO TOKEN VALIDADO
+			JsonWebToken jwt = new JsonWebToken();
+			Mysql_jwt_users usuarios = new Mysql_jwt_users();
+			String codificacion = jwt.codificar(usuarios.getTestById());
+			System.out.println("Hash de codificacion: "+codificacion);
+			//DECODIFICAR TOKEN VALIDADO
+			System.out.println("Decodificando...");
+			jwt.decodificar(codificacion, "alñskdansdofnaosndfoi");
+			
+			
+			
 			String documento = request.getParameter("documento");
 			JsonObject AfiliadoByDocument = null;
 			//ArrayList<String> array = new ArrayList<String>();
@@ -55,6 +63,7 @@ public class GetAfiliadoByDocument extends HttpServlet {
 
 			}
 			else {
+	
 				
 				Afiliado a = new Afiliado();
 		        a.setParams(documento);
