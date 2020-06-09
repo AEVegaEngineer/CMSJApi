@@ -6,9 +6,11 @@ import java.security.*;
 
 import org.mindrot.jbcrypt.BCrypt;
 public class CodificarHashPass {
+	
+	private static int workload = 12;
+
 	public String codificarmd5(String texto) throws NoSuchAlgorithmException
-	{
-		
+	{		
 		try {
 			 MessageDigest md = MessageDigest.getInstance("MD5");
 			 byte[] messageDigest = md.digest(texto.getBytes());
@@ -24,6 +26,12 @@ public class CodificarHashPass {
 			 throw new RuntimeException(e);
 			 }
 
+	}
+	public static String hashPassword(String password_plaintext) {
+		String salt = BCrypt.gensalt(workload);
+		String hashed_password = BCrypt.hashpw(password_plaintext, salt);
+
+		return(hashed_password);
 	}
 	public static boolean checkPassword(String password_plaintext, String stored_hash) {
 		boolean password_verified = false;

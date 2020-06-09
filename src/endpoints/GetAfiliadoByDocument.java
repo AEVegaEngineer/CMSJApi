@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import api.Mysql_jwt_users;
 import modelos.Afiliado;
+import security.CodificarHashPass;
 import security.JsonWebToken;
 import security.VerifyLogin;
 /**
@@ -38,7 +39,13 @@ public class GetAfiliadoByDocument extends HttpServlet {
 		// TODO Auto-generated method stub
 		String JsonWebToken = request.getParameter("token");
 		VerifyLogin verificar = new VerifyLogin();
+		//CodificarHashPass codificar = new CodificarHashPass();
+		System.out.println("hasheando");
+		String hashed = null;
 		
+			System.out.println(hashed = CodificarHashPass.hashPassword("test"));
+		
+		System.out.println(hashed);
 		try {
 			if(verificar.VerificarUsuario(JsonWebToken) != "" || verificar.VerificarUsuario(JsonWebToken) != null) {
 				try { 
