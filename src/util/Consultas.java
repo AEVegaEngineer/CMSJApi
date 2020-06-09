@@ -38,11 +38,10 @@ public class Consultas {
 	public ArrayList resultSetToArrayList(ResultSet rs){
 		java.sql.ResultSetMetaData md;
 		try {
-			md = rs.getMetaData();
-		
+			md = rs.getMetaData();		
 			int columns = md.getColumnCount();
 			ArrayList results = new ArrayList();
-		  
+			
 			while (rs.next()){
 				HashMap row = new HashMap();
 				results.add(row);

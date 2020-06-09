@@ -52,7 +52,7 @@ public class GetAfiliadoByDocument extends HttpServlet {
 					
 					if (documento == null || documento == "") {
 						
-						String error = " {\"results\": \" No se recibio un parámetro de entrada.\"}";
+						String error = " {\"results\": \"No se recibio un parámetro de entrada.\"}";
 						 PrintWriter out = response.getWriter();
 					        out.print(error);
 
@@ -73,7 +73,7 @@ public class GetAfiliadoByDocument extends HttpServlet {
 			}
 			else {
 				//LOGIN FAILED
-				String error = " {\"results\": \" Error al realizar login.\"}";
+				String error = " {\"results\": \"Error al realizar login.\"}";
 				 PrintWriter out = response.getWriter();
 				    out.print(error);
 				
