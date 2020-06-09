@@ -44,8 +44,10 @@ public class GetToken extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		// TODO Auto-generated method stub
 		GetTokenByUser token = new GetTokenByUser();
+		String nuevoToken = null;
 		String user = request.getParameter("user");
 		String pass = request.getParameter("pass");
 		if (user == null || user == "" || pass == null || pass == "") {			
@@ -55,7 +57,13 @@ public class GetToken extends HttpServlet {
 		}
 		else
 		{			
-			String nuevoToken = token.GenerateToken(user, pass);
+			
+			try {
+				nuevoToken = token.GenerateToken(user, pass);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	        PrintWriter out = response.getWriter();
 	        out.print(nuevoToken);
 		}

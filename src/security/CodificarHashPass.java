@@ -1,15 +1,18 @@
 package security;
+import static org.junit.Assert.assertThat;
+
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
-
+import javax.xml.bind.DatatypeConverter;
+import java.security.MessageDigest;
 import org.mindrot.jbcrypt.BCrypt;
 public class CodificarHashPass {
 	
-	private static int workload = 12;
-
-	public String codificarmd5(String texto) throws NoSuchAlgorithmException
+	
+	public String hashPassword(String texto) throws NoSuchAlgorithmException
 	{		
 		try {
 			 MessageDigest md = MessageDigest.getInstance("MD5");
@@ -27,20 +30,30 @@ public class CodificarHashPass {
 			 }
 
 	}
-	public static String hashPassword(String password_plaintext) {
-		String salt = BCrypt.gensalt(workload);
-		String hashed_password = BCrypt.hashpw(password_plaintext, salt);
-
-		return(hashed_password);
-	}
-	public static boolean checkPassword(String password_plaintext, String stored_hash) {
-		boolean password_verified = false;
-
-		if(null == stored_hash || !stored_hash.startsWith("$2a$"))
-			throw new java.lang.IllegalArgumentException("Invalid hash provided for comparison");
-
-		password_verified = BCrypt.checkpw(password_plaintext, stored_hash);
-
-		return(password_verified);
-	}
+	
+	
+	public Boolean verifyPassword(String hash, String plane_text) 
+			  throws NoSuchAlgorithmException {
+			   
+			    //String password = "ILoveJava";
+			         
+			    MessageDigest md = MessageDigest.getInstance("MD5");
+			    md.update(plane_text.getBytes());
+			    byte[] digest = md.digest();
+			    String myHash = DatatypeConverter
+			      .printHexBinary(digest).toUpperCase();
+			         
+			    Boolean estado = myHash.equals(hash);
+			    return estado;
+			}
+	
+	
+	
+	
+	
 }
+
+
+
+
+

@@ -24,8 +24,8 @@ public class JsonWebToken {
 	CodificarHashPass codifica = new CodificarHashPass();
 	public  String codificar(ArrayList<String> userdb) throws NoSuchAlgorithmException {
 		String webtoken = null;
-		String md5pass = codifica.codificarmd5(userdb.get(1));
-		String signaturecreation = codifica.codificarmd5("ColegioAPIJWT");
+		String md5pass = codifica.hashPassword(userdb.get(1));
+		String signaturecreation = codifica.hashPassword("ColegioAPIJWT");
 		
 		webtoken = Jwts.builder()
 				.setSubject("1234567890")
@@ -40,7 +40,7 @@ public class JsonWebToken {
 	
 
 public Claims decodificar(String webtoken, String signaturemd5) throws NoSuchAlgorithmException  {
-	String signaturevalidation = codifica.codificarmd5(signaturemd5);
+	String signaturevalidation = codifica.hashPassword(signaturemd5);
 	  Claims claims = Jwts.parser()
 			  	.setSigningKey(DatatypeConverter.parseString(signaturevalidation))
 			  	//.parsePlaintextJwt(webtoken).getBody();

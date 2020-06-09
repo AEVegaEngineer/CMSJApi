@@ -40,12 +40,6 @@ public class GetAfiliadoByDocument extends HttpServlet {
 		String JsonWebToken = request.getParameter("token");
 		VerifyLogin verificar = new VerifyLogin();
 		//CodificarHashPass codificar = new CodificarHashPass();
-		System.out.println("hasheando");
-		String hashed = null;
-		
-			System.out.println(hashed = CodificarHashPass.hashPassword("test"));
-		
-		System.out.println(hashed);
 		try {
 			if(verificar.VerificarUsuario(JsonWebToken) != "" || verificar.VerificarUsuario(JsonWebToken) != null) {
 				try { 
@@ -63,11 +57,14 @@ public class GetAfiliadoByDocument extends HttpServlet {
 
 					}
 					else {
-						Afiliado a = new Afiliado();
+						/*
+						 * Afiliado a = new Afiliado();
 				        a.setParams(documento);
 				        AfiliadoByDocument = a.getAfiliadoByDocumento();
-				        PrintWriter out = response.getWriter();
-				        out.print(AfiliadoByDocument);
+				        */
+						String error = " {\"results\": \" Error en el token de validacion.\"}";
+						 PrintWriter out = response.getWriter();
+					        out.print(error);
 					}
 			    }		
 			    catch (Exception e) { 

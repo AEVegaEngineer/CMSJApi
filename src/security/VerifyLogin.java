@@ -22,13 +22,14 @@ public class VerifyLogin {
 		//OBTENEMOS USUARIO Y CONTRASEÑA DE TOKEN
 		TokenClaimsToString conversor = new TokenClaimsToString(); 
 		Map<String, Object> mapstring  = conversor.FormatearString(c);
+		
 		System.out.println(mapstring.get("name"));
-		System.out.println(mapstring.get("pass"));
+		System.out.println(mapstring.get("pass"));//SIN HASH
 		
 		//OBTENEMOS USUARIO Y CONTRASEÑA DE LA BASE DE DATOS FILTRANDO POR USUARIO
-		ArrayList<String> db = usuarios.GetUser(mapstring.get("name").toString());
+		ArrayList<String> db = usuarios.GetUser(mapstring.get("name").toString());//PASS HASHED
 		//COMPARAMOS EL PASS DE LA BD CON EL PASS DE TOKEN
-		Boolean validacion = CodificarHashPass.checkPassword(mapstring.get("pass").toString(), db.get(1));
+		Boolean validacion = codifica.verifyPassword(mapstring.get("pass").toString(), db.get(1));
 		try {
 			if (validacion == true)
 			{
