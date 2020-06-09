@@ -32,7 +32,7 @@ public class JsonWebToken {
 				.setId("d9531212-511b-4443-8ca2-8a0859d8f7e1")
 				.setIssuedAt(Date.from(Instant.ofEpochSecond(1591366380)))
 				.claim("name", userdb.get(0)) //NOMBRE DE USUARIO
-				.claim("pass", md5pass) //CONTRASEÑA DE USUARIO
+				.claim("pass", userdb.get(1)) //CONTRASEÑA DE USUARIO
 				.signWith(SignatureAlgorithm.HS256, signaturecreation)
 				.compact();
 		return webtoken;
