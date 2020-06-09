@@ -1,26 +1,26 @@
 package security;
 
-import java.security.NoSuchAlgorithmException;
-
 import api.Mysql_jwt_users;
 
 public class GetTokenByUser {
 	public String GenerateToken(String user, String pass) {		
 		
 		JsonWebToken token = new JsonWebToken();
+		String tokenRetornado = null;
 		Mysql_jwt_users usuarios = new Mysql_jwt_users();
-		String tokenn = null;
 		try {
-			tokenn = token.codificar(usuarios.GetUser(user));
-		} catch (NoSuchAlgorithmException e) {
+			String hashPass = usuarios.GetUser(user).get(1);
+			CodificarHashPass asd = new CodificarHashPass();
+			Boolean auth = asd.checkPassword(pass, hashPass);
+			if(auth == true) {
+						
+				tokenRetornado = token.codificar(usuarios.GetUser(user));
+			}
+		} catch (Exception e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return tokenn;
-		
+			System.out.println("Error generando token");
+			e1.printStackTrace();
+		}			
+		return tokenRetornado;		
 	}
 }
