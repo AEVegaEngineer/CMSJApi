@@ -9,7 +9,7 @@ import io.jsonwebtoken.Claims;
 import util.TokenClaimsToString;
 
 public class VerifyLogin {
-	public boolean VerificarUsuario(String JsonWebToken) throws NoSuchAlgorithmException, ClassNotFoundException{
+	public String VerificarUsuario(String JsonWebToken) throws NoSuchAlgorithmException, ClassNotFoundException{
 		
 		JsonWebToken jwt = new JsonWebToken();
 		Mysql_jwt_users usuarios = new Mysql_jwt_users();
@@ -22,20 +22,12 @@ public class VerifyLogin {
 		Claims c = jwt.decodificar(JsonWebToken, "ColegioAPIJWT");
 		//pasar a string el claims
 		TokenClaimsToString conversor = new TokenClaimsToString(); 
-		Map<String, Object> convertido  = conversor.FormatearString(c);
-
-		
-		System.out.println("Contenido del JWT: " +convertido);
-		
+		Map<String, Object> mapstring  = conversor.FormatearString(c);
+		System.out.println(mapstring.get("name"));
+		System.out.println(mapstring.get("pass"));
 		
 		
 		
-		//String codificadoJWT = jwt.codificar(db);
-		
-		//System.out.println("Hash de codificacion: "+codificacion);
-
-		
-		
-		return true;
+		return "00005";
 	}
 }

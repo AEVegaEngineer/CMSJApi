@@ -36,10 +36,11 @@ public class GetAfiliadoByDocument extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		VerifyLogin boolverifica = new VerifyLogin();
 		String JsonWebToken = request.getParameter("token");
+		VerifyLogin boolverifica = new VerifyLogin();
+		
 		try {
-			if(boolverifica.VerificarUsuario(JsonWebToken) == true) {
+			if(boolverifica.VerificarUsuario(JsonWebToken) != "") {
 				try { 
 					//VERIFY VALIDATED 
 					//TEST GENERANDO TOKEN VALIDADO
@@ -47,35 +48,25 @@ public class GetAfiliadoByDocument extends HttpServlet {
 					JsonObject AfiliadoByDocument = null;
 					//ArrayList<String> array = new ArrayList<String>();
 					
-					
-					
 					if (documento == null || documento == "") {
 						
 						String error = " {\"results\": \" No se recibio un parámetro de entrada.\"}";
 						 PrintWriter out = response.getWriter();
-						
-
 					        out.print(error);
 
 					}
 					else {
-			
-						
 						Afiliado a = new Afiliado();
 				        a.setParams(documento);
 				        AfiliadoByDocument = a.getAfiliadoByDocumento();
 				        PrintWriter out = response.getWriter();
 				        out.print(AfiliadoByDocument);
 					}
-					
-			       
 			    }		
 			    catch (Exception e) { 
 			    	System.out.println("Retorna el catch");
 			        e.printStackTrace(); 
-			    } 
-				
-				
+			    } 				
 			}
 			else {
 				//LOGIN FAILED
