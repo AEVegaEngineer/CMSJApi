@@ -1,22 +1,15 @@
 package security;
-import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.time.Instant;
 import java.util.ArrayList;
 
 import javax.xml.bind.DatatypeConverter;
 
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.SignatureException;
-import io.jsonwebtoken.UnsupportedJwtException;
-import io.jsonwebtoken.impl.crypto.MacProvider;
 
 
 public class JsonWebToken {
@@ -24,7 +17,6 @@ public class JsonWebToken {
 	CodificarHashPass codifica = new CodificarHashPass();
 	public  String codificar(ArrayList<String> userdb) throws NoSuchAlgorithmException {
 		String webtoken = null;
-		String md5pass = codifica.hashPassword(userdb.get(1));
 		String signaturecreation = codifica.hashPassword("ColegioAPIJWT");
 		
 		webtoken = Jwts.builder()
