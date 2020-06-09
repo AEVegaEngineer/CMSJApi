@@ -14,7 +14,7 @@ public class GetTokenByDocumentTest {
 		Mysql_jwt_users usuarios = new Mysql_jwt_users();
 		String tokenn = null;
 		try {
-			tokenn = token.codificar(usuarios.GetUser("test","test"));
+			tokenn = token.codificar(usuarios.GetUser("test"));
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

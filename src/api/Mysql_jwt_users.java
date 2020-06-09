@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Mysql_jwt_users {
-	public ArrayList<String> GetUser(String user, String pass) throws ClassNotFoundException 
+	public ArrayList<String> GetUser(String user) throws ClassNotFoundException 
 	{
 		
 		try (Connection con = getConnection())
@@ -21,7 +21,7 @@ public class Mysql_jwt_users {
 			java.sql.ResultSetMetaData md;
 			ArrayList<String> arr = new ArrayList<String>();
 			Statement st = con.createStatement();
-			String sql = ("SELECT user,pass,permisos_agrupacion FROM api_users_os where user = '"+user+"' AND pass = '"+pass+"'");
+			String sql = ("SELECT user,pass,permisos_agrupacion FROM api_users_os where user = '"+user+"'");
 			ResultSet rs = st.executeQuery(sql);
 			md = rs.getMetaData();
 			int columnas = md.getColumnCount();

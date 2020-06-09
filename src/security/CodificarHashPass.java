@@ -3,6 +3,8 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
+
+import org.mindrot.jbcrypt.BCrypt;
 public class CodificarHashPass {
 	public String codificarmd5(String texto) throws NoSuchAlgorithmException
 	{
@@ -22,5 +24,15 @@ public class CodificarHashPass {
 			 throw new RuntimeException(e);
 			 }
 
+	}
+	public static boolean checkPassword(String password_plaintext, String stored_hash) {
+		boolean password_verified = false;
+
+		if(null == stored_hash || !stored_hash.startsWith("$2a$"))
+			throw new java.lang.IllegalArgumentException("Invalid hash provided for comparison");
+
+		password_verified = BCrypt.checkpw(password_plaintext, stored_hash);
+
+		return(password_verified);
 	}
 }

@@ -37,10 +37,10 @@ public class GetAfiliadoByDocument extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String JsonWebToken = request.getParameter("token");
-		VerifyLogin boolverifica = new VerifyLogin();
+		VerifyLogin verificar = new VerifyLogin();
 		
 		try {
-			if(boolverifica.VerificarUsuario(JsonWebToken) != "") {
+			if(verificar.VerificarUsuario(JsonWebToken) != "" || verificar.VerificarUsuario(JsonWebToken) != null) {
 				try { 
 					//VERIFY VALIDATED 
 					//TEST GENERANDO TOKEN VALIDADO

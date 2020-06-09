@@ -11,7 +11,7 @@ public class GetTokenByUser {
 		Mysql_jwt_users usuarios = new Mysql_jwt_users();
 		String tokenn = null;
 		try {
-			tokenn = token.codificar(usuarios.GetUser(user,pass));
+			tokenn = token.codificar(usuarios.GetUser(user));
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -19,32 +19,31 @@ public class VerifyLogin {
 		
 		Claims c = jwt.decodificar(JsonWebToken, "ColegioAPIJWT");
 		//pasar a string el claims
+		//OBTENEMOS USUARIO Y CONTRASEÑA DE TOKEN
 		TokenClaimsToString conversor = new TokenClaimsToString(); 
 		Map<String, Object> mapstring  = conversor.FormatearString(c);
 		System.out.println(mapstring.get("name"));
 		System.out.println(mapstring.get("pass"));
-		String passcodificado = codifica.codificarmd5((String) mapstring.get("pass"));
 		
-		
-		ArrayList<String> db = usuarios.GetUser(mapstring.get("name").toString(),passcodificado);
-		
-		
+		//OBTENEMOS USUARIO Y CONTRASEÑA DE LA BASE DE DATOS FILTRANDO POR USUARIO
+		ArrayList<String> db = usuarios.GetUser(mapstring.get("name").toString());
+		//COMPARAMOS EL PASS DE LA BD CON EL PASS DE TOKEN
+		Boolean validacion = CodificarHashPass.checkPassword(mapstring.get("pass").toString(), db.get(1));
 		try {
-			if (db.get(0) != "" || db.get(1) != "")
+			if (validacion == true)
 			{
 				System.out.println("se logueo correctamente");
+				return db.get(2);
 			}
 			else 
 			{
 				System.out.println("No se logueo correctamente");
+				return null;
 			}	
 		}
 		catch (Exception e){
-			System.out.println("No se logueo correctamente \n "+e);
+			System.out.println("No se logueo correctamente, sale por catch\n "+e);
+			return null;
 		}
-		
-		
-		
-		return "00005";
 	}
 }
