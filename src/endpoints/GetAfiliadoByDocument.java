@@ -3,6 +3,7 @@ package endpoints;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 import javax.json.JsonObject;
 import javax.servlet.ServletException;
@@ -15,9 +16,12 @@ import org.json.simple.JSONObject;
 
 import api.Mysql_jwt_users;
 import modelos.Afiliado;
+import modelos.Facturacion;
+import security.Auth;
 import security.CodificarHashPass;
 import security.JsonWebToken;
 import security.VerifyLogin;
+import util.LectorJson;
 /**
  * Servlet implementation class test2
  */
@@ -39,59 +43,59 @@ public class GetAfiliadoByDocument extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String JsonWebToken = request.getParameter("token");
-		VerifyLogin verificar = new VerifyLogin();
-		//CodificarHashPass codificar = new CodificarHashPass();
-		try {
-			String verificacion = verificar.VerificarUsuario(JsonWebToken);
-			if(verificacion != "" || verificacion != null) {
-				try { 
-					//VERIFY VALIDATED 
-					//TEST GENERANDO TOKEN VALIDADO
-					String documento = request.getParameter("documento");
-					JSONObject AfiliadoByDocument = null;
-					//ArrayList<String> array = new ArrayList<String>();
-					
-					if (documento == null || documento == "") {
-						
-						String error = " {\"results\": \"No se recibio un parámetro de entrada.\"}";
-						 PrintWriter out = response.getWriter();
-					        out.print(error);
+		/*
+		LectorJson lector = new LectorJson();
+		JSONObject jsonObject = lector.leerJson(request);
+		String token = (String) jsonObject.get("token");
+		String documento = (String) jsonObject.get("documento");
+		String obrasocial = (String) jsonObject.get("obrasocial");
+		*/
+		String token = request.getParameter("token");
+		String documento = request.getParameter("documento");
+		String obrasocial = request.getParameter("obrasocial");
+		//String token = (String) jsonObject.get("token");
+		
+		
+		Auth auth = new Auth();
+		PrintWriter out = response.getWriter();
+		response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        String error = "";
+        String agrupacion =auth.VerifyToken(token);
+		System.out.println("imprimo agrupacion :"+agrupacion);
+		JSONObject AfiliadoByDocument = null;
 
+		
+		if(Objects.equals(agrupacion, new String("99999")))  /*CODIGO UNICO DE HORUS */
+			{		
+		      //JSONObject facByAgr = null;
+				if (documento == null || documento == "" || documento == "null") {
+					
+					String error_print = " {\"results\": \"No se recibio documento como parámetro de entrada.\"}";
+				      out.print(error_print);
 					}
 					else {
-						
-						Afiliado a = new Afiliado();
-				        a.setParams(documento);
-				        AfiliadoByDocument = a.getAfiliadoByDocumento();
-				        PrintWriter out = response.getWriter();
+						Afiliado afi = new Afiliado();
+				        afi.setParams(documento);
+				        AfiliadoByDocument = afi.getAfiliadoByDocumento();
 				        response.setContentType("application/json");
 				        response.setCharacterEncoding("UTF-8");
+				        response.setStatus(200);
 				        out.print(AfiliadoByDocument);
 					}
-			    }		
-			    catch (Exception e) { 
-			    	System.out.println("Retorna el catch");
-			        e.printStackTrace(); 
-			    } 				
+			      //  out.print(facByAgr);
 			}
-			else {
-				//LOGIN FAILED
-				String error = " {\"results\": \"Error al realizar login.\"}";
-				 PrintWriter out = response.getWriter();
-				    out.print(error);
-				
+			else
+			{
+				error = " {\"status\": \"400\",\"mensaje\": \"Error: Token invalido\"}";
+		        out.print(error);
 			}
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+
+		//CodificarHashPass codificar = new CodificarHashPass();
+		
+		//ArrayList<String> array = new ArrayList<String>();
+		
 		
 	}
 

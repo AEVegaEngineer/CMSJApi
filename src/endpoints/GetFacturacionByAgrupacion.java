@@ -56,6 +56,7 @@ public class GetFacturacionByAgrupacion extends HttpServlet {
 		
 		String token = (String) jsonObject.get("token");
 		
+		
 		Auth auth = new Auth();
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
@@ -63,11 +64,11 @@ public class GetFacturacionByAgrupacion extends HttpServlet {
         String error = "";
 		
 			String agrupacion =auth.VerifyToken(token);
-			System.out.println("imprimo agrupacion :"+agrupacion);
+			//System.out.println("imprimo agrupacion :"+agrupacion);
 			
 			if(agrupacion == "null" || agrupacion == null || agrupacion == "") 
 			{		
-				error = " {\"status\": \"401\",\"mensaje\": \"Error: Token invalido\"}";
+				error = " {\"status\": \"400\",\"mensaje\": \"Error: Token invalido\"}";
 		        out.print(error);
 			}
 			else
