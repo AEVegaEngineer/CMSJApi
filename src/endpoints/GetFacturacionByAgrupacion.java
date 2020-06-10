@@ -17,7 +17,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
+import io.github.mattvass.resultsetmapper.JsonResultSet;
 import modelos.Afiliado;
 import modelos.Facturacion;
 import security.Auth;
@@ -49,21 +51,25 @@ public class GetFacturacionByAgrupacion extends HttpServlet {
 				
 		StringBuffer jb = new StringBuffer();
 		String line = null;
+		JSONObject jsonObject = null;
 		try {
 		    BufferedReader reader = request.getReader();
 		    while ((line = reader.readLine()) != null)
 		    	jb.append(line);
 		} catch (Exception e) { /*report an error*/ }
 		try {
-			JSONObject jsonObject =  HTTP.toJSONObject(jb.toString());
-		} catch (JSONException e) {
+			JSONParser parser = new JSONParser();
+			jsonObject = (JSONObject)parser.parse(jb.toString());// new JsonResultSet().toJson(rs);
+			System.out.println(jb.toString());
+		} catch (Exception e) {
 			// crash and burn
 			throw new IOException("Error parsing JSON request string");
 		}
 		
-		
-		String agrupacion = request.getParameter("agrupacion");
-		String token = request.getParameter("token");
+		String agrupacion = (String) jsonObject.get("agrupacion");
+		String token = (String) jsonObject.get("token");
+		//String agrupacion = request.getParameter("agrupacion");
+		//String token = request.getParameter("token");
 		Auth auth = new Auth();
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
