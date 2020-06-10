@@ -9,7 +9,7 @@ public class Auth {
 		try {
 			String verificacion /* viene codigo agrupacion*/ = verificar.VerificarUsuario(JsonWebToken);
 			if(verificacion != "" || verificacion != null) {
-				System.out.println("Se verificó correctamente");
+				//System.out.println("Se verificó correctamente");
 				return verificacion;				
 			}
 		} catch (NoSuchAlgorithmException e) {

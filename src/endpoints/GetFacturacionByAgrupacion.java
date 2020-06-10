@@ -69,7 +69,7 @@ public class GetFacturacionByAgrupacion extends HttpServlet {
 		else
 		{*/
 			String agrupacion =auth.VerifyToken(token);
-			System.out.println("imprimo agrupacion :"+agrupacion);
+			//System.out.println("imprimo agrupacion :"+agrupacion);
 			if(agrupacion != "" || agrupacion != null) 
 			{						
 				JSONObject facByAgr = null;
