@@ -1,5 +1,6 @@
 package endpoints;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
@@ -45,6 +46,22 @@ public class GetFacturacionByAgrupacion extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+				
+		StringBuffer jb = new StringBuffer();
+		String line = null;
+		try {
+		    BufferedReader reader = request.getReader();
+		    while ((line = reader.readLine()) != null)
+		    	jb.append(line);
+		} catch (Exception e) { /*report an error*/ }
+		try {
+			JSONObject jsonObject =  HTTP.toJSONObject(jb.toString());
+		} catch (JSONException e) {
+			// crash and burn
+			throw new IOException("Error parsing JSON request string");
+		}
+		
+		
 		String agrupacion = request.getParameter("agrupacion");
 		String token = request.getParameter("token");
 		Auth auth = new Auth();
