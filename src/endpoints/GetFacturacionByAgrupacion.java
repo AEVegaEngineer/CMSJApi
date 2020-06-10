@@ -61,12 +61,13 @@ public class GetFacturacionByAgrupacion extends HttpServlet {
 			{						
 				JsonObject facByAgr = null;
 				Facturacion a = new Facturacion();
-				facByAgr = a.getFacturacionByAgrupacion(agrupacion);		        
+				facByAgr = a.getFacturacionByAgrupacion(agrupacion);		  
+				response.setStatus(301);
 		        out.print(facByAgr);
 			}
 			else
 			{
-				error = " {\"results\": \"Error: credenciales incorrectas\"}";				
+				error = " {\"status\": \"401\",\"mensaje\": \"Error: credenciales incorrectas\"}";				
 		        out.print(error);
 			}	
 		}		
