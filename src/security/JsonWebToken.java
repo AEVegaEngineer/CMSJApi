@@ -33,12 +33,23 @@ public class JsonWebToken {
 
 public Claims decodificar(String webtoken, String signaturemd5) throws NoSuchAlgorithmException  {
 	String signaturevalidation = codifica.hashPassword(signaturemd5);
-	  Claims claims = Jwts.parser()
-			  	.setSigningKey(DatatypeConverter.parseString(signaturevalidation))
-			  	//.parsePlaintextJwt(webtoken).getBody();
-	            .parseClaimsJws(webtoken).getBody();
-	 
-	    return claims;
+	System.out.println("Decodificando");
+	//ARROJA ERROR AL VALIDAR
+	try {
+		Claims claims = Jwts.parser()
+		  	.setSigningKey(DatatypeConverter.parseString(signaturevalidation))
+            .parseClaimsJws(webtoken).getBody();
+		 System.out.println(claims);
+		 return claims;
+		
+		}
+		catch (Exception e)
+		{
+		System.out.println("Error al decodificar, no coincide la firma");
+		 
+		return null;
+		}
+	   
 	}
 
 }

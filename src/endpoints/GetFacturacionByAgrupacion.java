@@ -53,7 +53,7 @@ public class GetFacturacionByAgrupacion extends HttpServlet {
 		LectorJson lector = new LectorJson();
 		JSONObject jsonObject = lector.leerJson(request);
 		
-		String agrupacion = (String) jsonObject.get("agrupacion");
+		//String agrupacion = (String) jsonObject.get("agrupacion");
 		String token = (String) jsonObject.get("token");
 		
 		Auth auth = new Auth();
@@ -61,14 +61,16 @@ public class GetFacturacionByAgrupacion extends HttpServlet {
 		response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         String error = "";
-		if (agrupacion == null || agrupacion == "") 
+		/*if (agrupacion == null || agrupacion == "") 
 		{			
 			error = " {\"results\": \" No se recibio un parámetro de entrada.\"}";			
 	        out.print(error);
 		}
 		else
-		{
-			if(auth.VerifyToken(token)) 
+		{*/
+			String agrupacion =auth.VerifyToken(token);
+			System.out.println("imprimo agrupacion :"+agrupacion);
+			if(agrupacion != "" || agrupacion != null) 
 			{						
 				JSONObject facByAgr = null;
 				Facturacion a = new Facturacion();
@@ -81,7 +83,7 @@ public class GetFacturacionByAgrupacion extends HttpServlet {
 				error = " {\"status\": \"401\",\"mensaje\": \"Error: credenciales incorrectas\"}";				
 		        out.print(error);
 			}
-		}
+		//}
 	}
 
 	/**
