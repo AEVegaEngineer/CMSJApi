@@ -23,10 +23,8 @@ public class Consultas {
 		try (Connection con = getConnection())
 	    {	
 			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(sql);	
-			//JsonObject resultados = new JsonResultSet().toJson(rs);
-			//JsonObject statuscode = new JsonObject("status", "200");
-			//statuscode.put;
+			ResultSet rs = st.executeQuery(sql);
+			
 			JSONObject main = new JSONObject();
 			main.put("status", "200 OK");
 			JsonObject result = new JsonResultSet().toJson(rs);
@@ -37,18 +35,7 @@ public class Consultas {
 			else
 			{
 				main.put("resultado", result.get("results"));
-			}
-			
-			
-			/*
-			
-			JsonObject obj = null;
-			//obj = jsonObjectToBuilder(obj).add("status", 200).build();
-			
-			obj = jsonBuilder.add("resultado",resultados);
-			//obj.put("resultado",resultados);
-			 */
-			//System.out.println(obj);	
+			}			
 			con.close();					
 			return main;			
 			

@@ -24,6 +24,7 @@ import modelos.Afiliado;
 import modelos.Facturacion;
 import security.Auth;
 import security.VerifyLogin;
+import util.LectorJson;
 
 /**
  * Servlet implementation class GetFacturacionByAgrupacion
@@ -49,27 +50,12 @@ public class GetFacturacionByAgrupacion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 				
-		StringBuffer jb = new StringBuffer();
-		String line = null;
-		JSONObject jsonObject = null;
-		try {
-		    BufferedReader reader = request.getReader();
-		    while ((line = reader.readLine()) != null)
-		    	jb.append(line);
-		} catch (Exception e) { /*report an error*/ }
-		try {
-			JSONParser parser = new JSONParser();
-			jsonObject = (JSONObject)parser.parse(jb.toString());// new JsonResultSet().toJson(rs);
-			System.out.println(jb.toString());
-		} catch (Exception e) {
-			// crash and burn
-			throw new IOException("Error parsing JSON request string");
-		}
+		LectorJson lector = new LectorJson();
+		JSONObject jsonObject = lector.leerJson(request);
 		
 		String agrupacion = (String) jsonObject.get("agrupacion");
 		String token = (String) jsonObject.get("token");
-		//String agrupacion = request.getParameter("agrupacion");
-		//String token = request.getParameter("token");
+		
 		Auth auth = new Auth();
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
@@ -86,16 +72,16 @@ public class GetFacturacionByAgrupacion extends HttpServlet {
 			{						
 				JSONObject facByAgr = null;
 				Facturacion a = new Facturacion();
-				facByAgr = a.getFacturacionByAgrupacion(agrupacion);		  
-				response.setStatus(301);
+				facByAgr = a.getFacturacionByAgrupacion(agrupacion);
+				response.setStatus(200);
 		        out.print(facByAgr);
 			}
 			else
 			{
 				error = " {\"status\": \"401\",\"mensaje\": \"Error: credenciales incorrectas\"}";				
 		        out.print(error);
-			}	
-		}		
+			}
+		}
 	}
 
 	/**
