@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 import javax.json.JsonObject;
 
+import org.json.simple.JSONObject;
+
 import api.MysqlConnection;
 import util.Consultas;
 
@@ -70,7 +72,7 @@ public void setNumDocumento(int numDocumento) {
 		
 	return resultado;
 }
-	public JsonObject getAfiliadoByDocumento() {
+	public JSONObject getAfiliadoByDocumento() {
 		if(params != "") {
 			Consultas a = new Consultas();
 			try {

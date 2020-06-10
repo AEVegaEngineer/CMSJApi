@@ -13,19 +13,33 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
 
+import org.json.simple.JSONObject;
+
 import api.MysqlConnection;
 import io.github.mattvass.resultsetmapper.JsonResultSet;
 
 public class Consultas {
-	public	JsonObject consultar(String sql) throws ClassNotFoundException {
+	public	JSONObject consultar(String sql) throws ClassNotFoundException {
 		try (Connection con = getConnection())
 	    {	
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(sql);	
-			JsonObject resultados = new JsonResultSet().toJson(rs);
-			JsonObjectBuilder jsonBuilder = Json.createObjectBuilder()
-					.add("status",200)
-					.add("resultados", resultados);
+			//JsonObject resultados = new JsonResultSet().toJson(rs);
+			//JsonObject statuscode = new JsonObject("status", "200");
+			//statuscode.put;
+			JSONObject main = new JSONObject();
+			main.put("status", "200 OK");
+			JsonObject result = new JsonResultSet().toJson(rs);
+			if (result.get("results").equals(new ArrayList<>()))
+			{
+				main.put("resultado", "No se han obtenido resultados");
+			}
+			else
+			{
+				main.put("resultado", result.get("results"));
+			}
+			
+			
 			/*
 			
 			JsonObject obj = null;
@@ -36,7 +50,7 @@ public class Consultas {
 			 */
 			//System.out.println(obj);	
 			con.close();					
-			return (JsonObject) jsonBuilder;			
+			return main;			
 			
 	    } catch (SQLException e1) {
 	    	System.out.println("Salio por el catch"); 

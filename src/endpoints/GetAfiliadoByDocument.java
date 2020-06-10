@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
+
 import api.Mysql_jwt_users;
 import modelos.Afiliado;
 import security.CodificarHashPass;
@@ -47,7 +49,7 @@ public class GetAfiliadoByDocument extends HttpServlet {
 					//VERIFY VALIDATED 
 					//TEST GENERANDO TOKEN VALIDADO
 					String documento = request.getParameter("documento");
-					JsonObject AfiliadoByDocument = null;
+					JSONObject AfiliadoByDocument = null;
 					//ArrayList<String> array = new ArrayList<String>();
 					
 					if (documento == null || documento == "") {
@@ -63,6 +65,8 @@ public class GetAfiliadoByDocument extends HttpServlet {
 				        a.setParams(documento);
 				        AfiliadoByDocument = a.getAfiliadoByDocumento();
 				        PrintWriter out = response.getWriter();
+				        response.setContentType("application/json");
+				        response.setCharacterEncoding("UTF-8");
 				        out.print(AfiliadoByDocument);
 					}
 			    }		

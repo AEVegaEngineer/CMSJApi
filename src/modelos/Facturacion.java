@@ -2,6 +2,8 @@ package modelos;
 
 import javax.json.JsonObject;
 
+import org.json.simple.JSONObject;
+
 import util.Consultas;
 
 public class Facturacion {
@@ -36,7 +38,7 @@ public class Facturacion {
 		}
 		return null;
 	}
-	public JsonObject getFacturacionByAgrupacion(String params) {
+	public JSONObject getFacturacionByAgrupacion(String params) {
 		this.params = params;
 		Consultas a = new Consultas();
 		try {
