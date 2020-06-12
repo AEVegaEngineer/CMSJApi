@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 
 import api.Mysql_jwt_users;
 import modelos.Afiliado;
@@ -50,11 +51,17 @@ public class GetAfiliado extends HttpServlet {
 		String token = (String) jsonObject.get("token");
 		String documento = (String) jsonObject.get("documento");
 		String obrasocial = (String) jsonObject.get("obrasocial");
-		*/
+		*//*
 		response.addHeader("Access-Control-Allow-Origin", "http://localhost:8080/CMSJApi/GetAfiliado");
 		response.addHeader("Vary", "Origin");
+		*/
+		response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+        response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
+        response.addHeader("Access-Control-Max-Age", "1728000");
 		
-		//EndpointObrasocial consulta = new EndPointObraSocial();
+		
+		EndpointObrasocial consulta = new EndpointObrasocial();
 		
 		String token = request.getParameter("token");
 		String obrasocial = request.getParameter("obrasocial");
@@ -63,7 +70,17 @@ public class GetAfiliado extends HttpServlet {
 		String documento = request.getParameter("documento");
 		String practica = request.getParameter("practica");
 		String afiliado = request.getParameter("nroafi");
-		consulta.ValidaRedSeguroMedico(obrasocial, cantidad, practica, afiliado);
+		System.out.println(afiliado);
+		String respuesta = null;
+		try {
+			respuesta = consulta.ValidaRedSeguroMedico(obrasocial, cantidad, practica, afiliado);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		Auth auth = new Auth();
@@ -89,10 +106,8 @@ public class GetAfiliado extends HttpServlet {
 						Afiliado afi = new Afiliado();
 				        afi.setParams(documento);
 				        AfiliadoByDocument = afi.getAfiliadoByDocumento();
-				        response.setContentType("application/json");
-				        response.setCharacterEncoding("UTF-8");
 				        response.setStatus(200);
-				        out.print(AfiliadoByDocument);
+				        out.print(respuesta);
 					}
 			      //  out.print(facByAgr);
 			}
