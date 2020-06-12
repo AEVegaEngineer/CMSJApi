@@ -71,8 +71,9 @@ public class GetAfiliadoByDocument extends HttpServlet {
 		      //JSONObject facByAgr = null;
 				if (documento == null || documento == "" || documento == "null") {
 					
-					String error_print = " {\"results\": \"No se recibio documento como parámetro de entrada.\"}";
-				      out.print(error_print);
+					String error_print = "{\"status\": 400,\"results\": \"Error: No se recibio documento como parámetro de entrada\"}";
+						response.setStatus(200);
+						out.print(error_print);
 					}
 					else {
 						Afiliado afi = new Afiliado();
@@ -88,6 +89,7 @@ public class GetAfiliadoByDocument extends HttpServlet {
 			else
 			{
 				error = " {\"status\": \"400\",\"mensaje\": \"Error: Token invalido\"}";
+				response.setStatus(400);
 		        out.print(error);
 			}
 		

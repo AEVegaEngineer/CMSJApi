@@ -15,7 +15,7 @@ public class Facturacion {
 			"WHERE apiusers.permisos_agrupacion = ";
 	private String facAll = "select * from facturacion_cabecera";
 	private String params = "";
-	public JsonObject getFacturacionAll() {
+	public JSONObject getFacturacionAll() {
 		Consultas a = new Consultas();
 		try {
 			return a.consultar(facAll);
@@ -26,7 +26,7 @@ public class Facturacion {
 		}
 		return null;
 	}
-	public JsonObject getFacturacionById(String params) {
+	public JSONObject getFacturacionById(String params) {
 		this.params = params;
 		Consultas a = new Consultas();
 		try {

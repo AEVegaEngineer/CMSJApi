@@ -18,16 +18,16 @@ public class GetTokenByUser {
 			String passget = cod.hashPassword(pass);//CONTRASEÑA ENVIADA POR USUARIO HASHED
 			
 			
-			System.out.println(passdb);
-			System.out.println(passget);
+			//System.out.println(passdb);
+			//System.out.println(passget);
 			//Boolean auth = cod.verifyPassword(hashPass, pass);
 			if(passdb.contentEquals(passget)) {
-				System.out.println("Entre al if");
-				tokenRetornado = token.codificar(consultas);
-			}
-			else {
-				System.out.println("no se validó correctamente");
-				
+				String tokenCompleto = token.codificar(consultas);
+				tokenCompleto = "{\"status\":200,\"resultado\": \""+tokenCompleto+"\"}";
+				tokenRetornado = tokenCompleto;
+			} else {				
+				String error = "{\"status\":401,\"resultado\": \"Credenciales Incorrectas\"}";
+				tokenRetornado = error;
 			}
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block

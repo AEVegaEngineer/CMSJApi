@@ -23,10 +23,9 @@ public class Consultas {
 		try (Connection con = getConnection())
 	    {	
 			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(sql);
-			
+			ResultSet rs = st.executeQuery(sql);	
 			JSONObject main = new JSONObject();
-			main.put("status", "200 OK");
+			main.put("status", 200);
 			JsonObject result = new JsonResultSet().toJson(rs);
 			if (result.get("results").equals(new ArrayList<>()))
 			{

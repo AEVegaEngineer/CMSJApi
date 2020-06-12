@@ -9,19 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
+
 import security.GetTokenByUser;
+import util.LectorJson;
 
 /**
  * Servlet implementation class GetToken
  */
-@WebServlet("/GetToken")
-public class GetToken extends HttpServlet {
+@WebServlet("/Validar")
+public class Validar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetToken() {
+    public Validar() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,30 +47,32 @@ public class GetToken extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// TODO Auto-generated method stub
+		JSONObject jsonObject = new LectorJson().leerJson(request);
+		
+		String user = (String) jsonObject.get("user");
+		String pass = (String) jsonObject.get("pass");
+		
 		GetTokenByUser token = new GetTokenByUser();
 		String nuevoToken = null;
-		String user = request.getParameter("user");
-		String pass = request.getParameter("pass");
+		//String user = request.getParameter("user");
+		//String pass = request.getParameter("pass");
+		PrintWriter out = response.getWriter();
+		response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
 		if (user == null || user == "" || pass == null || pass == "") {			
-			String error = " {\"results\": \" No se recibio un parámetro de entrada.\"}";
-			PrintWriter out = response.getWriter();
-	        out.print(error);
+			String error = " {\"status\":400,\"resultado\": \"No se recibio un parámetro de entrada\"}";
+			out.print(error);
 		}
 		else
-		{			
-			
+		{		
 			try {
 				nuevoToken = token.GenerateToken(user, pass);
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-	        PrintWriter out = response.getWriter();
+			}	        
 	        out.print(nuevoToken);
 		}
-		
-		
-		//doGet(request, response);
 	}
 
 }

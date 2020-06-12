@@ -32,14 +32,14 @@ import util.LectorJson;
 
 @Produces(MediaType.APPLICATION_JSON) 
 @Consumes(MediaType.APPLICATION_JSON) 
-@WebServlet("/GetFacturacionByAgrupacion")
-public class GetFacturacionByAgrupacion extends HttpServlet {
+@WebServlet("/GetFacturacion")
+public class GetFacturacion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetFacturacionByAgrupacion() {
+    public GetFacturacion() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -63,12 +63,13 @@ public class GetFacturacionByAgrupacion extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         String error = "";
 		
-			String agrupacion =auth.VerifyToken(token);
+			String agrupacion = auth.VerifyToken(token);
 			//System.out.println("imprimo agrupacion :"+agrupacion);
 			
 			if(agrupacion == "null" || agrupacion == null || agrupacion == "") 
 			{		
-				error = " {\"status\": \"400\",\"mensaje\": \"Error: Token invalido\"}";
+				error = " {\"status\": 401,\"mensaje\": \"Error: Token invalido\"}";
+				response.setStatus(401);
 		        out.print(error);
 			}
 			else
