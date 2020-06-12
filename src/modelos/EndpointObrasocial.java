@@ -35,25 +35,30 @@ public class EndpointObrasocial {
 		while ((inputLine = in.readLine()) != null) {
 		     inputText = inputText + inputLine;
 		}
-
-		String [] arr = inputText.split(":");
+		char a = ' ';
+		char b = inputText.charAt(0);
+		System.out.println(a);
+		System.out.println(b);
 		
-		if (arr[0].equals("ERROR")) {
-			System.out.println("Erorr1 : " +arr[0]);
-			System.out.println("Erorr2 : " +arr[1]);
-			
-			jsonString = "{ \"autorizacion\" : \""+arr[1]+"\", \"estado\":\"No Autorizado\"}";
-			
+		int diff = a-b;
+		System.out.println(diff);
+		if ( diff == 0) {
+				jsonString = "{ \"autorizacion\" : \"codigo no válido\", \"estado\":\"No Autorizado\"}";
 			
 		} else {
-			String [] dividido = arr[0].split(",");
-			
-			//SERIALIZAR JHONSON
-			
-			jsonString = "{ \"autorizacion\" : \""+dividido[0]+"\", \"practica\" : \""+dividido[1]+"\", \"estado\":\"Autorizado\"}";
+			String [] arr = inputText.split(":");
+			if (arr[0].equals("ERROR") || arr[0].equals("")) {	
+				System.out.println("Erorr1 : " +arr[0]);
+				System.out.println("Erorr2 : " +arr[1]);
+				jsonString = "{ \"autorizacion\" : \""+arr[1]+"\", \"estado\":\"No Autorizado\"}";
+			} else {
+				String [] dividido = arr[0].split(",");				
+				//SERIALIZAR JHONSON
+				jsonString = "{ \"autorizacion\" : \""+dividido[0]+"\", \"practica\" : \""+dividido[1]+"\", \"estado\":\"Autorizado\"}";
+			}
+
 		}
 
-		
 		return jsonString;
 	}
 
