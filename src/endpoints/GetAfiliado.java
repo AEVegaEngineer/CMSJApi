@@ -27,13 +27,13 @@ import util.LectorJson;
  */
 @WebServlet("/GetAfiliadoByDocument")
 
-public class GetAfiliadoByDocument extends HttpServlet {
+public class GetAfiliado extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetAfiliadoByDocument() {
+    public GetAfiliado() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -51,9 +51,12 @@ public class GetAfiliadoByDocument extends HttpServlet {
 		String obrasocial = (String) jsonObject.get("obrasocial");
 		*/
 		String token = request.getParameter("token");
-		String documento = request.getParameter("documento");
 		String obrasocial = request.getParameter("obrasocial");
-		//String token = (String) jsonObject.get("token");
+		String fecha_realizacion = request.getParameter("fecha_realizacion");
+		String cantidad = request.getParameter("cantidad");
+		String documento = request.getParameter("documento");
+		String practica = request.getParameter("practica");
+		
 		
 		
 		Auth auth = new Auth();

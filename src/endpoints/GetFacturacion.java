@@ -67,9 +67,9 @@ public class GetFacturacion extends HttpServlet {
 			//System.out.println("imprimo agrupacion :"+agrupacion);
 			
 			if(agrupacion == "null" || agrupacion == null || agrupacion == "") 
-			{		
-				error = " {\"status\": 401,\"mensaje\": \"Error: Token invalido\"}";
+			{	
 				response.setStatus(401);
+				error = " {\"status\": 401,\"mensaje\": \"Error: Token invalido\"}";
 		        out.print(error);
 			}
 			else

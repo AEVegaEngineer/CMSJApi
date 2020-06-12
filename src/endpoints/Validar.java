@@ -47,19 +47,29 @@ public class Validar extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// TODO Auto-generated method stub
-		JSONObject jsonObject = new LectorJson().leerJson(request);
+		PrintWriter out = response.getWriter();
+		response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+		String user = null;
+		String pass = null;
 		
-		String user = (String) jsonObject.get("user");
-		String pass = (String) jsonObject.get("pass");
+		
+		
+		try {
+			JSONObject jsonObject = new LectorJson().leerJson(request);
+			user = (String) jsonObject.get("user");
+			pass = (String) jsonObject.get("pass");
+				
+		
 		
 		GetTokenByUser token = new GetTokenByUser();
 		String nuevoToken = null;
 		//String user = request.getParameter("user");
 		//String pass = request.getParameter("pass");
-		PrintWriter out = response.getWriter();
-		response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
+		
+		
 		if (user == null || user == "" || pass == null || pass == "") {			
+			response.setStatus(400);
 			String error = " {\"status\":400,\"resultado\": \"No se recibio un parámetro de entrada\"}";
 			out.print(error);
 		}
@@ -73,6 +83,11 @@ public class Validar extends HttpServlet {
 			}	        
 	        out.print(nuevoToken);
 		}
+	
+	} catch (Exception e) {
+		response.setStatus(400);
+		String error = " {\"status\":400,\"resultado\": \"Error en el formato de archivo JSON\"}";
+		out.print(error);
 	}
-
+	}
 }
