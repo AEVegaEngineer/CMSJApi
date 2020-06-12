@@ -16,6 +16,7 @@ import org.json.simple.JSONObject;
 
 import api.Mysql_jwt_users;
 import modelos.Afiliado;
+import modelos.EndpointObrasocial;
 import modelos.Facturacion;
 import security.Auth;
 import security.CodificarHashPass;
@@ -25,7 +26,7 @@ import util.LectorJson;
 /**
  * Servlet implementation class test2
  */
-@WebServlet("/GetAfiliadoByDocument")
+@WebServlet("/GetAfiliado")
 
 public class GetAfiliado extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -50,13 +51,19 @@ public class GetAfiliado extends HttpServlet {
 		String documento = (String) jsonObject.get("documento");
 		String obrasocial = (String) jsonObject.get("obrasocial");
 		*/
+		response.addHeader("Access-Control-Allow-Origin", "http://localhost:8080/CMSJApi/GetAfiliado");
+		response.addHeader("Vary", "Origin");
+		
+		//EndpointObrasocial consulta = new EndPointObraSocial();
+		
 		String token = request.getParameter("token");
 		String obrasocial = request.getParameter("obrasocial");
 		String fecha_realizacion = request.getParameter("fecha_realizacion");
 		String cantidad = request.getParameter("cantidad");
 		String documento = request.getParameter("documento");
 		String practica = request.getParameter("practica");
-		
+		String afiliado = request.getParameter("nroafi");
+		consulta.ValidaRedSeguroMedico(obrasocial, cantidad, practica, afiliado);
 		
 		
 		Auth auth = new Auth();
