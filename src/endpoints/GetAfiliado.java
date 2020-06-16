@@ -17,7 +17,7 @@ import org.json.simple.parser.ParseException;
 
 import api.Mysql_jwt_users;
 import modelos.Afiliado;
-import modelos.EndpointObrasocial;
+import modelos.Obrasociales;
 import modelos.Facturacion;
 import security.Auth;
 import security.CodificarHashPass;
@@ -61,7 +61,7 @@ public class GetAfiliado extends HttpServlet {
         response.addHeader("Access-Control-Max-Age", "1728000");
 		
 		
-		EndpointObrasocial consulta = new EndpointObrasocial();
+		Obrasociales consulta = new Obrasociales();
 		
 		String token = request.getParameter("token");
 		String obrasocial = request.getParameter("obrasocial");
