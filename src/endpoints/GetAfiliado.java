@@ -70,7 +70,7 @@ public class GetAfiliado extends HttpServlet {
 		String documento = request.getParameter("documento");
 		String practica = request.getParameter("practica");
 		String afiliado = request.getParameter("nroafi");
-		System.out.println(afiliado);
+		System.out.println(request.getParameter("obrasocial"));
 		String respuesta = null;
 		try {
 			respuesta = consulta.ValidaRedSeguroMedico(obrasocial, cantidad, practica, afiliado);
