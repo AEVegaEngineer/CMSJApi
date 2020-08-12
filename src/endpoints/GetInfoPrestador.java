@@ -18,6 +18,7 @@ import org.json.simple.parser.ParseException;
 import api.Mysql_jwt_users;
 import modelos.Afiliado;
 import modelos.Obrasociales;
+import modelos.Prestadores;
 import modelos.Facturacion;
 import security.Auth;
 import security.CodificarHashPass;
@@ -88,7 +89,7 @@ public class GetInfoPrestador extends HttpServlet {
 						out.print(error_print);
 					}
 					else {
-						Prestador pre = new Prestador();
+						Prestadores pre = new Prestadores();
 						pre.setParams(documento);
 				        Prestador = pre.getAfiliadoByDocumento();
 				        response.setStatus(200);
