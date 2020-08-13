@@ -28,7 +28,7 @@ import util.LectorJson;
 /**
  * Servlet implementation class test2
  */
-@WebServlet("/GetAfiliado")
+@WebServlet("/GetInfoPrestador")
 
 public class GetInfoPrestador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -79,7 +79,7 @@ public class GetInfoPrestador extends HttpServlet {
 		JSONObject Prestador = null;
 
 		
-		if(Objects.equals(agrupacion, new String("99999")))  /*CODIGO UNICO DE HORUS */
+		if(Objects.equals(agrupacion, new String("99998")))  /*CODIGO UNICO DE HORUS */
 			{		
 		      //JSONObject facByAgr = null;
 				if (documento == null || documento == "" || documento == "null") {
@@ -89,11 +89,15 @@ public class GetInfoPrestador extends HttpServlet {
 						out.print(error_print);
 					}
 					else {
+						System.out.println("Va correcto");
+						int doc =Integer.parseInt(documento);
 						Prestadores pre = new Prestadores();
-						pre.setParams(documento);
-				        Prestador = pre.getAfiliadoByDocumento();
+						pre.setNumDocumento(doc);
+						System.out.println("Hace el integer correctamente");
+				        Prestador = pre.getPrestadorByDocument();
+				        response.setContentType("application/json");
 				        response.setStatus(200);
-				        out.print(respuesta);
+				        out.print(Prestador);
 					}
 			      //  out.print(facByAgr);
 			}

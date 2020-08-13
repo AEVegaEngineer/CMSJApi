@@ -16,23 +16,9 @@ import api.MysqlConnection;
 import util.Consultas;
 
 public class Prestadores {
-private static int numAfiliado;
 private static int numDocumento;
-private String getPrestador = "SELECT * FROM afiliado where NRODOC =  ";
-private String params = "";
+private String getPrestador = "SELECT nro_documento,matricula,apellido,fecha_nac,esp_principal,tipo_socio,categoria,email,part_telefono FROM import_tps_socio WHERE nro_documento =  ";
 
-public String getParams() {
-	return params;
-}
-public void setParams(String params) {
-	this.params = params;
-}
-public static int getNumAfiliado() {
-	return numAfiliado;
-}
-public static void setNumAfiliado(int numAfiliado) {
-	Prestadores.numAfiliado = numAfiliado;
-}
 public static int getNumDocumento() {
 	return numDocumento;
 }
@@ -40,13 +26,13 @@ public void setNumDocumento(int numDocumento) {
 	Prestadores.numDocumento = numDocumento;
 }
 	
-	public	ArrayList<String> GetAfiliadoByDocumento() throws ClassNotFoundException {
+	public	ArrayList<String> GetPrestadorByDocument() throws ClassNotFoundException {
 
 		ArrayList<String> resultado = new ArrayList<String>();
 		
 		try (Connection con = getConnection())
 	    {
-			String sql = "Select * from socio where nro_documento = "+numDocumento;
+			String sql = "Select nro_documento,matricula,apellido,fecha_nac,esp_principal,tipo_socio,categoria,email,part_telefono from import_tps_socio where nro_documento = "+numDocumento;
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
@@ -83,23 +69,16 @@ public void setNumDocumento(int numDocumento) {
 		
 	return resultado;
 }
-	public JSONObject getAfiliadoByDocumento() {
-		if(params != "") {
+	public JSONObject getPrestadorByDocument() {
 			Consultas a = new Consultas();
 			try {
-				return a.consultar(getPrestador+params);
+				return a.consultar(getPrestador+getNumDocumento());
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				System.out.println("Error consultando getAfiliadoByDocument");
 				e.printStackTrace();
 			}
-		}
-		else {
-			System.out.println("ERROR , SIN PARAMETROS");
-			
-			return null;
-			
-		}
+		
 		return null;
 	}
 	
